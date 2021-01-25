@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Praga</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../stylesGeral.css">
+    <script src='../js/praga.js'></script>
+    <script>
+        var pragas = readData();
+        window.addEventListener('beforeunload', saveData);
+    </script>
+
+</head>
+<header>
+    <a href="../pgPrincipal.html"><img class="logo" src="../imgs/biohazard-logo-vector.png" alt="logo" height="60px" width="65px"></a>
+    <nav>
+        <ul class="nav_links">
+            <li><a href="pgLocal.html">Local</a></li>
+            <li><a href="pgContaminacao.html">Contaminação</a></li>
+            <li><a href="pgRelatorios.html">Relatórios</a></li>
+        </ul>
+    </nav>
+</header>
+
+<body>
+    <div class="content">
+        <ul class="in_page_actions">
+            <li><button onclick="setAddPlagueForm()">Adicionar Praga</button></li>
+            <li><button onclick="alterPlagueForm()">Alterar Praga</button></li>
+            <li><button onclick="deletePlagueForm()">Excluir Praga</button></li>
+            <li><button onclick="getOnePlagueForm()">Listar uma Praga</button></li>
+            <li><button onclick="showAllPlagues()">Listar Pragas</button></li>
+        </ul>
+    </div>
+    <div class="center_action">
+        <div class="content" id="contentSection">
+        
+        </div>
+    </div>
+
+</body>
+
+
+</html>

@@ -32,15 +32,37 @@ ul {
 
 ul button{
     margin: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
+
+.in_page_actions{
+    display:-webkit-inline-flex;
+}
+
 
 .content {
     display: flex;
     justify-content: center;
 }
 
-.center_items{
-    display: flexbox;
+.center_action{
+    display: block;
+}
+
+fieldset{
+    display:-webkit-flex;
+    margin: 10px;
+}
+
+form{
+    display:flex;
+}
+
+
+.button_menu {
+    padding-top: 10%;
+
     align-content: center;
 }
 
@@ -57,13 +79,15 @@ header{
 
 body{
     margin: auto;
-    display: flexbox;
+    display: block;
 }
 
-.logo{
+a .logo{
+    justify-self:flex-start;
     margin-left: 30px;
     cursor: pointer;
     margin-right: auto;
+    padding: 5px;
 }
 
 .nav_links{
@@ -83,7 +107,7 @@ body{
     color: #edf0f1;
 }
 
-button{
+button, fieldset  #adicionar{
     padding: 9px 25px;
     background-color: rgba(155, 50, 50, 1);
     border: none;
