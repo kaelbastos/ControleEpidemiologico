@@ -117,7 +117,7 @@ function addPlague() {
         mensagem += 'Modos de Combate está vazio\n';
     }
     console.log(mensagem);
-    if (codigo != '' && nome != '' && plagueAlreadyExists(codigo, nome)) {
+    if (codigo != '' && plagueAlreadyExists(codigo)) {
         mensagem += 'Praga já cadastrada\n';
     }
     console.log(mensagem);
@@ -160,7 +160,7 @@ function getOnePlagueForm() {
         '</span>' +
         '<br>' +
         '<span>' +
-        '<input type="button" id="adicionar" onclick="showOnePlague()" value="Adicionar">' +
+        '<input type="button" id="adicionar" onclick="showOnePlague()" value="Mostrar">' +
         '</span>' +
         '</fieldset>' +
         '</form>';
