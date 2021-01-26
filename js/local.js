@@ -78,7 +78,7 @@ function addLocal() {
     var caracteristicas = document.querySelector('#caracteristicas').value;
 
     var mensagem = '';
-    if (codigo == '') {
+    if (cep == '') {
         mensagem += 'Ponto central está vazio\n';
     }
     console.log(mensagem);
@@ -142,7 +142,7 @@ function getOneLocalForm() {
 function showOneLocal() {
     var cep = document.querySelector('#ponto_central').value;
 
-    if (codigo == '') {
+    if (cep == '') {
         window.alert('Cep Ponto Central está vazio');
         return;
     }
@@ -189,6 +189,8 @@ function checkLocalCode() {
         '<label for="ponto_central">Cep Ponto Central:</label>' +
         '<input type="text" id="ponto_central" name="ponto_central" placeholder="00000" disebled=true>' +
         '</span>' +
+        '<br>' +
+        '<span>' +
         '<label for="raio">Raio(Km):</label>' +
         '<input type="number" id="raio" name="raio" min="0" value="0">' +
         '</span>' +
