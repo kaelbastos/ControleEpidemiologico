@@ -9,50 +9,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=2">
     <link rel="shortcut icon" href="../imgs/biohazard-logo-vector.png">
     <link rel="stylesheet" href="../stylesGeral.css">
-    <script type="text/javascript">
-        function showPlaguesByDeseaseNumber(element) {
-            console.log(element.value);
-        }
-
-        function showPlaguesByDeseaseName(element) {
-            console.log(element.value);
-        }
-
-        function showPlaguesBetweenDates() {
-            console.log("Play");
-        }
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src='../js/relatórios.js'></script>
+    <script>
+        var data = readData();
+        var locais = data[0];
+        var pragas = data[1];
+        var contaminações = data[2];
     </script>
 </head>
-
 <header>
-    <a class="logo" href="pgPrincipal.html"><img src="../imgs/biohazard-logo-vector.png" alt="logo" height="60px"
-            width="65px"></a>
-    <nav>
+    <a href='../pgPrincipal.html'><img class="logo" src="../imgs/biohazard-logo-vector.png" alt="logo" height="60px" width="65px"></a>
+    <nav class='page_references'>
         <ul class="nav_links">
             <li><a href="pgLocal.html">Local</a></li>
             <li><a href="pgPraga.html">Praga</a></li>
-            <li><a href="pgContaminacao.html">Contaminação</a></li>
+            <li><a href="pgRelatorios.html">Relatórios</a></li>
         </ul>
     </nav>
-    <a class="cta" href="#"><button>Desevolvedores</button></a>
 </header>
 
 <body>
-    <form>
-        <label for="deseaseNumber">Mostrar todos os dados das pragas que transmitem mais do que X doenças:</label>
-        <input type="number" id="deseaseNumber" name="deseaseNumber" min="0" value="0">
-        <input type="button" onclick="showPlaguesByDeseaseNumber(document.getElementById('deseaseNumber'))"
-            value="Play">
-    </form>
-    <form>
-        <label for="deseaseName">Mostrar todas as pragas que transmitem a doença:</label>
-        <input type="text" id="deseaseName" name="deseaseName">
-        <input type="button" onclick="showPlaguesByDeseaseName(document.getElementById('deseaseName'))" value="Play">
-    </form>
-    <form>
-        <label for="plagueButton">Mostrar locais e pragas que contaminaram entre jan/2019 e mar/2019. </label>
-        <input type="button" id="plagueButton" onclick="showPlaguesBetweenDates()" value="Play">
-    </form>
+    <div class="content">
+        <ul class="in_page_actions">
+            <li><button id='showByNumberOfDeaseases'>Mostrar pragas que tem mais que X doenças:</button></li>
+            <li><button id='showByDeaseaseName'>Mostrar pragas que transmitem determinada doença:</button></li>
+            <li><button id='showByDate'>Pragas que contaminaram entre 1/19 a 3/19</button></li>
+        </ul>
+    </div>
+    <div class="center_action">
+        <div class="content" id="contentSection"></div>
+    </div>
 </body>
+<script>
+    $('#showByNumberOfDeaseases').click(function(){
+        showByNumberOfDeaseasesForm();
+    })
+    $('#showByDeaseaseName').click(function(){
+        showByDeaseaseNameForm();
+    })
+    $('#showByDate').click(function(){
+        showByDate();
+    })
+</script>
 
 </html>

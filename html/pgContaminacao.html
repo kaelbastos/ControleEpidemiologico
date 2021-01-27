@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../stylesGeral.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src='../js/contaminação.js'></script>
     <script>
         var data = readData();
@@ -19,8 +20,8 @@
     </script>
 </head>
 <header>
-    <img class="logo" src="../imgs/biohazard-logo-vector.png" alt="logo" height="60px" width="65px">
-    <nav>
+    <a href='../pgPrincipal.html'><img class="logo" src="../imgs/biohazard-logo-vector.png" alt="logo" height="60px" width="65px"></a>
+    <nav class='page_references'>
         <ul class="nav_links">
             <li><a href="pgLocal.html">Local</a></li>
             <li><a href="pgPraga.html">Praga</a></li>
@@ -32,16 +33,34 @@
 <body>
     <div class="content">
         <ul class="in_page_actions">
-            <li><button onclick="setAddContaminationForm()">Adicionar Contaminação</button></li>
-            <li><button onclick="alterContaminationForm()">Alterar Contaminação</button></li>
-            <li><button onclick="deleteContaminationForm()">Excluir Contaminação</button></li>
-            <li><button onclick="getOneContaminationForm()">Listar uma Contaminação</button></li>
-            <li><button onclick="showAllContaminations()">Listar Contaminaçôes</button></li>
+            <li><button id='addContamination'>Adicionar Contaminação</button></li>
+            <li><button id='alterContamination'>Alterar Contaminação</button></li>
+            <li><button id='deleteContamination'>Excluir Contaminação</button></li>
+            <li><button id='showOneContamination'>Listar uma Contaminação</button></li>
+            <li><button id='showAllContaminations'>Listar Contaminaçôes</button></li>
         </ul>
     </div>
     <div class="center_action">
         <div class="content" id="contentSection"></div>
     </div>
 </body>
+<script>
+    $('#addContamination').click(function(){
+        setAddContaminationForm();
+    })
+    $('#alterContamination').click(function(){
+        alterContaminationForm();
+    })
+    $('#deleteContamination').click(function(){
+        deleteContaminationForm();
+    })
+    $('#showOneContamination').click(function(){
+        getOneContaminationForm();
+    })
+    $('#showAllContaminations').click(function(){
+        showAllContaminations();
+    })
+
+</script>
 
 </html>

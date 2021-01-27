@@ -1,6 +1,3 @@
-//import { readData, savePlague, saveLocal, saveContamination } from './main_controller.js';
-
-
 class Praga {
     código;
     nome;

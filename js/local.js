@@ -50,6 +50,8 @@ function setAddLocalForm() {
         '<label for="ponto_central">Cep Ponto Central:</label>' +
         '<input type="text" id="ponto_central" name="ponto_central" placeholder="00000">' +
         '</span>' +
+        '<br>' +
+        '<span>' +
         '<label for="raio">Raio(Km):</label>' +
         '<input type="number" id="raio" name="raio" min="0" value="0">' +
         '</span>' +
@@ -165,7 +167,7 @@ function alterLocalForm() {
         '<form>' +
         '<fieldset>' +
         '<span>' +
-        '<label for="ponto_central">Código:</label>' +
+        '<label for="ponto_central">Cep Ponto central:</label>' +
         '<input type="text" id="codigo" name="codigo" placeholder="00000">' +
         '</span>' +
         '<br>' +
@@ -258,7 +260,7 @@ function deletePlague(){
     if (plagueAlreadyExists(cep)) {
         window.locais = window.locais.filter(element => { return element.CEP_ponto_central != cep });
 
-        window.alert('Local deletada com sucesso!!');
+        window.alert('Local deletado com sucesso!!');
         document.querySelector('#contentSection').innerHTML = '';
     } else {
         window.alert('Local não cadastrado');

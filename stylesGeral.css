@@ -90,6 +90,10 @@ a .logo{
     padding: 5px;
 }
 
+.page_references{
+    margin-left: auto;
+}
+
 .nav_links{
     list-style: none;
 }
@@ -117,6 +121,11 @@ button, fieldset  #adicionar{
     margin-left: 10px;
 }
 
+fieldset{
+    display: grid;
+    justify-content: center;
+}
+
 button:hover{
     background-color: rgba(155, 50, 50, .8);
 }
@@ -131,4 +140,3 @@ button a:hover {
     justify-content: center;
     align-items: center;
 }
-

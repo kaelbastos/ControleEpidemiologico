@@ -44,13 +44,13 @@ class Contaminação {
     }
 }
 
-// local page functions
+// contaminação page functions
 
 function readData() {
-        var data;
-        var locais = JSON.parse(window.localStorage.getItem('locais')) ?? [];
-        var pragas = JSON.parse(window.localStorage.getItem('pragas')) ?? [];
-        var contaminações = JSON.parse(window.localStorage.getItem('contaminações')) ?? [];
+    var data;
+    var locais = JSON.parse(window.localStorage.getItem('locais')) ?? [];
+    var pragas = JSON.parse(window.localStorage.getItem('pragas')) ?? [];
+    var contaminações = JSON.parse(window.localStorage.getItem('contaminações')) ?? [];
     return [locais, pragas, contaminações];
 }
 
@@ -59,7 +59,7 @@ function saveData() {
 }
 
 function setAddContaminationForm() {
-    document.querySelector('#contentSection').innerHTML =
+    $('#contentSection').get()[0].innerHTML =
         '<form>' +
         '<fieldset>' +
         '<span>' +
@@ -84,37 +84,38 @@ function setAddContaminationForm() {
         '<br>' +
         '<span>' +
         '<label for="ações">Ações:</label>' +
-        '<input type="text" id="ações" name="ações">' +
+        '<input type="textField" id="ações" name="ações">' +
         '</span>' +
         '<br>' +
         '<span>' +
         '<label for="data_de_exterminio">Data de Extermínio:</label>' +
-        '<input type="text" id="data_de_exterminio" name="data_de_exterminio" placeholder="00/00/00">' +
+        '<input type="text" id="data_de_exterminio" name="data_de_exterminio" placeholder="00/00/0000">' +
         '</span>' +
         '<br>' +
         '<span>' +
-        '<input type="button" id="adicionar" onclick="addContaminação()" value="Adicionar">' +
+        '<input type="button" id="adicionar" onclick="addContamination()" value="Adicionar">' +
         '</span>' +
         '</fieldset>' +
         '</form>';
 }
 
-function addContaminação() {
-    var cep = document.querySelector('#ponto_central').value;
-    var praga = Number(document.querySelector('#codigo_praga').value);
-    var data = Number(document.querySelector('#data').value);
-    var hora = document.querySelector('#hora').value;
-    //Add Other Atributes
+function addContamination() {
+    var cep = $('#ponto_central').val();
+    var praga = $('#codigo_praga').val();
+    var data = $('#data').val();
+    var hora = $('#hora').val();
+    var açôes = $('#ações').val();
+    var dataDeExterminio = $('#data_de_exterminio').val();
 
     var ceps_locais = window.locais || [];
     var codigos_pragas = window.pragas || [];
 
-    ceps_locais = ceps_locais.map(local => local.CEP_ponto_central);
+    ceps_locais = ceps_locais.map(contaminação => contaminação.CEP_ponto_central);
     codigos_pragas = codigos_pragas.map(praga => praga.código);
 
     var mensagem = '';
     if (cep == '') {
-        mensagem += 'Cep do local está vazio\n';
+        mensagem += 'Cep do contaminação está vazio\n';
     }
     if (cep == '' && !ceps_locais.contains(cep)) {
         mensagem += 'Local não cadastrado\n';
@@ -141,9 +142,9 @@ function addContaminação() {
     }
 
 
-    window.contaminações.push(new Contaminação(cep, praga, data, hora));
+    window.contaminações.push(new Contaminação(cep, praga, data, hora, açôes, dataDeExterminio));
     window.alert('Contaminação cadastrado com sucesso!!');
-    document.querySelector('#contentSection').innerHTML = '';
+    $('#contentSection').get()[0].innerHTML = '';
 }
 
 function contaminationAlreadyExists(cep, praga, data, hora) {
@@ -161,11 +162,11 @@ function contaminationAlreadyExists(cep, praga, data, hora) {
 
 
 function showAllContaminations() {
-    document.querySelector('#contentSection').innerHTML = JSON.stringify(window.contaminações);
+    $('#contentSection').get()[0].innerHTML = JSON.stringify(window.contaminações);
 }
 
 function getOneContaminationForm() {
-    document.querySelector('#contentSection').innerHTML =
+    $('#contentSection').get()[0].innerHTML =
         '<form>' +
         '<fieldset>' +
         '<span>' +
@@ -180,7 +181,7 @@ function getOneContaminationForm() {
         '<br>' +
         '<span>' +
         '<label for="data">Data:</label>' +
-        '<input type="text" id="data" name="data" placeholder="00/00/00">' +
+        '<input type="text" id="data" name="data" placeholder="00/00/0000">' +
         '</span>' +
         '<br>' +
         '<span>' +
@@ -196,20 +197,20 @@ function getOneContaminationForm() {
 }
 
 function showOneContamination() {
-    var cep = document.querySelector('#ponto_central').value;
-    var praga = Number(document.querySelector('#codigo_praga').value);
-    var data = Number(document.querySelector('#data').value);
-    var hora = document.querySelector('#hora').value;
+    var cep = $('#ponto_central').val();
+    var praga = $('#codigo_praga').val();
+    var data = $('#data').val();
+    var hora = $('#hora').val();
 
     var ceps_locais = window.locais || [];
     var codigos_pragas = window.pragas || [];
 
-    ceps_locais = ceps_locais.map(local => local.CEP_ponto_central);
+    ceps_locais = ceps_locais.map(contaminação => contaminação.CEP_ponto_central);
     codigos_pragas = codigos_pragas.map(praga => praga.código);
 
     var mensagem = '';
     if (cep == '') {
-        mensagem += 'Cep do local está vazio\n';
+        mensagem += 'Cep do contaminação está vazio\n';
     }
     if (cep == '' && !ceps_locais.contains(cep)) {
         mensagem += 'Local não cadastrado\n';
@@ -227,7 +228,7 @@ function showOneContamination() {
         mensagem += 'Hora é inválida\n';
     }
 
-    var contaminaçãoEsperada = new Contaminação(cep, praga, data, hora);
+    var contaminaçãoEsperada = new Contaminação(cep, praga, data, hora, undefined, undefined);
     var contaminação;
     window.contaminações.forEach(element => {
         if (element.equals(contaminaçãoEsperada)) {
@@ -236,88 +237,14 @@ function showOneContamination() {
     })
 
     if (contaminação) {
-        document.querySelector('#contentSection').innerHTML = JSON.stringify(contaminação);
+        $('#contentSection').get()[0].innerHTML = JSON.stringify(contaminação);
     } else {
         window.alert('Contaminação não cadastrada');
     }
 }
 
-function alterContaminaçõesForm() {
-    document.querySelector('#contentSection').innerHTML =
-        '<form>' +
-        '<fieldset>' +
-        '<span>' +
-        '<label for="ponto_central">Código:</label>' +
-        '<input type="text" id="codigo" name="codigo" placeholder="00000">' +
-        '</span>' +
-        '<br>' +
-        '<span>' +
-        '<input type="button" id="adicionar" onclick="checkLocalCode()" value="Alterar">' +
-        '</span>' +
-        '</fieldset>' +
-        '</form>';
-}
-
-function checkLocalCode() {
-    var cep = document.querySelector('#ponto_central').value;
-
-    if (localAlreadyExists(cep)) {
-        var local = window.locais.filter(element => { return element.CEP_ponto_central == cep })[0];
-
-        document.querySelector('#contentSection').innerHTML =
-            '<form>' +
-            '<fieldset>' +
-            '<span>' +
-            '<label for="ponto_central">Cep Ponto Central:</label>' +
-            '<input type="text" id="ponto_central" name="ponto_central" placeholder="00000" disebled=true>' +
-            '</span>' +
-            '<label for="raio">Raio(Km):</label>' +
-            '<input type="number" id="raio" name="raio" min="0" value="0">' +
-            '</span>' +
-            '<br>' +
-            '<span>' +
-            '<label for="população">População(Mil habitantes):</label>' +
-            '<input type="number" id="população" name="população" min="0" value="0">' +
-            '</span>' +
-            '<br>' +
-            '<span>' +
-            '<label for="caracteristicas">Características:</label>' +
-            '<input type="text" id="caracteristicas" name="caracteristicas">' +
-            '</span>' +
-            '<br>' +
-            '<span>' +
-            '<input type="button" id="adicionar" onclick="alterLocal()" value="Alterar">' +
-            '</span>' +
-            '</fieldset>' +
-            '</form>';
-        document.querySelector('#ponto_central').value = local.CEP_ponto_central;
-        document.querySelector('#raio').value = local.raio;
-        document.querySelector('#população').value = local.população;
-        document.querySelector('#caracteristicas').value = local.caracteristicas;
-    } else {
-        window.alert('Local não cadastrado!!');
-    }
-}
-
-
-function alterLocal() {
-    var cep = document.querySelector('#ponto_central').value;
-    var raio = Number(document.querySelector('#raio').value);
-    var população = Number(document.querySelector('#população').value);
-    var caracteristicas = document.querySelector('#caracteristicas').value;
-
-    var local = window.locais.filter(element => { return element.CEP_ponto_central == cep })[0];
-
-    local.raio = raio;
-    local.população = população;
-    local.caracteristicas = caracteristicas;
-
-    window.alert('Local alteradl com sucesso!!');
-    document.querySelector('#contentSection').innerHTML = '';
-}
-
-function deleteLocalForm() {
-    document.querySelector('#contentSection').innerHTML =
+function alterContaminationForm() {
+    $('#contentSection').get()[0].innerHTML =
         '<form>' +
         '<fieldset>' +
         '<span>' +
@@ -326,21 +253,151 @@ function deleteLocalForm() {
         '</span>' +
         '<br>' +
         '<span>' +
-        '<input type="button" id="adicionar" onclick="deleteLocal()" value="Deletar">' +
+        '<label for="codigo_praga">Código Praga:</label>' +
+        '<input type="text" id="codigo_praga" name="codigo_praga" placeholder="00000">' +
+        '</span>' +
+        '<br>' +
+        '<span>' +
+        '<label for="data">Data:</label>' +
+        '<input type="text" id="data" name="data" placeholder="00/00/0000">' +
+        '</span>' +
+        '<br>' +
+        '<span>' +
+        '<label for="hora">Hora:</label>' +
+        '<input type="text" id="hora" name="hora" placeholder="00:00">' +
+        '</span>' +
+        '<br>' +
+        '<span>' +
+        '<input type="button" id="adicionar" onclick="checkContamination()" value="Alterar">' +
         '</span>' +
         '</fieldset>' +
         '</form>';
 }
 
+function checkContamination() {
+    var cep = $('#ponto_central').val();
+    var praga = $('#codigo_praga').val();
+    var data = $('#data').val();
+    var hora = $('#hora').val();
+
+    if (localAlreadyExists(cep, praga, data, hora)) {
+        var contaminaçãoEsperada = new Contaminação(cep, praga, data, hora, undefined, undefined);
+        var contaminação = window.locais.filter(element => { return element.equals(contaminaçãoEsperada) })[0];
+
+        $('#contentSection').get()[0].innerHTML =
+            '<form>' +
+            '<fieldset>' +
+            '<span>' +
+            '<label for="ponto_central">Cep Ponto Central:</label>' +
+            '<input type="text" id="ponto_central" name="ponto_central" placeholder="00000" disabled=true>' +
+            '</span>' +
+            '<br>' +
+            '<span>' +
+            '<label for="codigo_praga">Código Praga:</label>' +
+            '<input type="text" id="codigo_praga" name="codigo_praga" placeholder="00000 disabled=true>' +
+            '</span>' +
+            '<br>' +
+            '<span>' +
+            '<label for="data">Data:</label>' +
+            '<input type="text" id="data" name="data" placeholder="00/00/0000" disabled=true>' +
+            '</span>' +
+            '<br>' +
+            '<span>' +
+            '<label for="hora">Hora:</label>' +
+            '<input type="text" id="hora" name="hora" placeholder="00:00" disabled=true>' +
+            '</span>' +
+            '<br>' +
+            '<span>' +
+            '<label for="ações">Ações:</label>' +
+            '<input type="textField" id="ações" name="ações">' +
+            '</span>' +
+            '<br>' +
+            '<span>' +
+            '<label for="data_de_exterminio">Data de Extermínio:</label>' +
+            '<input type="text" id="data_de_exterminio" name="data_de_exterminio" placeholder="00/00/00">' +
+            '</span>' +
+            '<br>' +
+            '<span>' +
+            '<input type="button" id="adicionar" onclick="alterContamination()" value="Alterar">' +
+            '</span>' +
+            '</fieldset>' +
+            '</form>';
+        $('#ponto_central').val() = contaminação.CEP_ponto_central;
+        $('#codigo_praga').val() = contaminação.código_praga;
+        $('#data').val() = contaminação.data;
+        $('#hora').val() = contaminação.hora;
+        $('#ações').val() = contaminação.açôes;
+        $('#data_de_exterminio').val() = contaminação.data_extermínio;
+    } else {
+        window.alert('Contaminação não cadastrada!!');
+    }
+}
+
+function alterContamination() {
+    var cep = $('#ponto_central').val();
+    var praga = $('#codigo_praga').val();
+    var data = $('#data').val();
+    var hora = $('#hora').val();
+    var açôes = $('#ações').val();
+    var dataDeExterminio = $('#data_de_exterminio').val();
+
+    var contaminação = window.locais.filter(element => { return element.equals(contaminaçãoEsperada) })[0];
+
+    contaminação.CEP_ponto_central = cep;
+    contaminação.código_praga = praga;
+    contaminação.data = data;
+    contaminação.hora = hora;
+    contaminação.açôes = açôes;
+    contaminação.data_extermínio = dataDeExterminio;
+
+    window.alert('Local alteradl com sucesso!!');
+    $('#contentSection').get()[0].innerHTML = '';
+}
+
+function deleteContaminationForm() {
+    $('#contentSection').get()[0].innerHTML =
+    '<form>' +
+    '<fieldset>' +
+    '<span>' +
+    '<label for="ponto_central">Cep Ponto Central:</label>' +
+    '<input type="text" id="ponto_central" name="ponto_central" placeholder="00000">' +
+    '</span>' +
+    '<br>' +
+    '<span>' +
+    '<label for="codigo_praga">Código Praga:</label>' +
+    '<input type="text" id="codigo_praga" name="codigo_praga" placeholder="00000">' +
+    '</span>' +
+    '<br>' +
+    '<span>' +
+    '<label for="data">Data:</label>' +
+    '<input type="text" id="data" name="data" placeholder="00/00/0000">' +
+    '</span>' +
+    '<br>' +
+    '<span>' +
+    '<label for="hora">Hora:</label>' +
+    '<input type="text" id="hora" name="hora" placeholder="00:00">' +
+    '</span>' +
+    '<br>' +
+    '<span>' +
+    '<input type="button" id="adicionar" onclick="deletePlague()" value="Deletar">' +
+    '</span>' +
+    '</fieldset>' +
+    '</form>';
+}
+
 function deletePlague() {
-    var cep = document.querySelector('#ponto_central').value;
+    var cep = $('#ponto_central').val();
+    var praga = $('#codigo_praga').val();
+    var data = $('#data').val();
+    var hora = $('#hora').val();
 
     if (plagueAlreadyExists(cep)) {
-        window.locais = window.locais.filter(element => { return element.CEP_ponto_central != cep });
+        var contaminaçãoEsperada = new Contaminação(cep, praga, data, hora, undefined, undefined);
+        window.contaminações = window.contaminações.filter(element => { return !element.equals(contaminaçãoEsperada) });
 
-        window.alert('Local deletada com sucesso!!');
-        document.querySelector('#contentSection').innerHTML = '';
+        window.alert('Contaminação deletada com sucesso!!');
+        $('#contentSection').get()[0].innerHTML = '';
     } else {
-        window.alert('Local não cadastrado');
+        window.alert('Contaminação não cadastrado');
     }
 }
